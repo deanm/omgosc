@@ -1,0 +1,5 @@
+OMG OSC is an OSC implementation in JavaScript, using the UDP protocol libraries
+from NodeJS, and the ArrayBuffer implementation for type conversions.  It was
+written for use in Plask (www.plask.org), but is applicable elsewhere.
+
+(c) Dean McNamee <dean@gmail.com>, 2011.
