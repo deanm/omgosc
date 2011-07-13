@@ -24,6 +24,8 @@ var events = require('events');
 var dgram = require('dgram');
 
 function UdpSender(host, port, opts) {
+  opts = opts === undefined ? { } : opts;
+
   var udp = dgram.createSocket('udp4');
   if (opts.broadcast === true)
     udp.setBroadcast(true);
