@@ -112,7 +112,17 @@ function UdpReceiver(port) {
 
   function readString(buffer, start) {
     var end = start;
-    while (buffer[end] !== 0) end++;
+    var len = buffer.length;
+
+    // Seek to the end of the string (which will be terminated by 1-4 NULLs).
+    while (end < len && buffer[end] !== 0) end++;
+
+    // NOTE(deanm): At this point we could probably salvage the message and
+    // take the string (which was probably truncated due to UDP packet size),
+    // but it is probably the best decision to error out on malformed data.
+    if (end + 1 >= len)
+      throw "Encountered invalid OSC string, missing NULL termination.";
+
     return buffer.toString('utf8', start, end);
   }
 
