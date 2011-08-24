@@ -200,7 +200,11 @@ function UdpReceiver(port) {
   }
 
   udp.on('message', function(msg, rinfo) {
-    processMessageOrBundle(msg, 0);
+    try {
+      processMessageOrBundle(msg, 0);
+    } catch(e) {
+      console.log('WARNING: Skipping OSC message, error: ' + e);
+    }
   });
 
   udp.bind(port);
