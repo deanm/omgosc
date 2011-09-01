@@ -123,7 +123,7 @@ function UdpReceiver(port) {
     if (end >= len)
       throw "Encountered invalid OSC string, missing NULL termination.";
 
-    return buffer.toString('utf8', start, end);
+    return buffer.toString('ascii', start, end);
   }
 
   function readFloat(buffer, pos) {
