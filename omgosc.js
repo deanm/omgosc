@@ -172,7 +172,7 @@ function UdpReceiver(port) {
           params.push(true);
           break;
         case 'F':
-          params.push(true);
+          params.push(false);
           break;
         case 'f':
           params.push(readFloat(msg, pos));
