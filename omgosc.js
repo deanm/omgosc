@@ -120,7 +120,7 @@ function UdpReceiver(port) {
     // NOTE(deanm): At this point we could probably salvage the message and
     // take the string (which was probably truncated due to UDP packet size),
     // but it is probably the best decision to error out on malformed data.
-    if (end + 1 >= len)
+    if (end >= len)
       throw "Encountered invalid OSC string, missing NULL termination.";
 
     return buffer.toString('utf8', start, end);
