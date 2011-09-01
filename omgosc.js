@@ -78,6 +78,9 @@ function UdpSender(host, port, opts) {
         case 's':
           appendString(octets, params[i]);
           break;
+        case 'T':
+        case 'F':
+          break;
         default:
           throw 'Unknown osc type: ' + tag;
           break;
