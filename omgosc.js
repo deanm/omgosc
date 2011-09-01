@@ -80,6 +80,8 @@ function UdpSender(host, port, opts) {
           break;
         case 'T':
         case 'F':
+        case 'N':
+        case 'I':
           break;
         default:
           throw 'Unknown osc type: ' + tag;
@@ -176,6 +178,12 @@ function UdpReceiver(port) {
           break;
         case 'F':
           params.push(false);
+          break;
+        case 'N':
+          params.push(null);
+          break;
+        case 'I':
+          params.push(Infinity);
           break;
         case 'f':
           params.push(readFloat(msg, pos));
