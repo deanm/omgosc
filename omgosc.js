@@ -78,6 +78,7 @@ function UdpSender(host, port, opts) {
         case 's':
           appendString(octets, params[i]);
           break;
+        // types without argument data
         case 'T':
         case 'F':
         case 'N':
@@ -182,8 +183,9 @@ function UdpReceiver(port) {
         case 'N':
           params.push(null);
           break;
+        // NOTE(pizthewiz) - find better synthesized parameter for Impulse
         case 'I':
-          params.push(Infinity);
+          params.push(null);
           break;
         case 'f':
           params.push(readFloat(msg, pos));
