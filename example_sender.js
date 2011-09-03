@@ -26,6 +26,6 @@ var sender = new osc.UdpSender('127.0.0.1', 7777);
 var i = 0;
 setInterval(function() {
   sender.send('/osc_data',
-              'sfi',
-              ['hello', Math.random(), i++]);
+              'sfiTFNI',
+              ['hello', Math.random(), i++, null, null, null, null]);
 }, 1000/10);
