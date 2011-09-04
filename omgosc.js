@@ -78,11 +78,8 @@ function UdpSender(host, port, opts) {
         case 's':
           appendString(octets, params[i]);
           break;
-        // types without argument data
-        case 'T':
-        case 'F':
-        case 'N':
-        case 'I':
+        // Types with implicit parameters, just ignore the passed parameter.
+        case 'T': case 'F': case 'N': case 'I':
           break;
         default:
           throw 'Unknown osc type: ' + tag;
@@ -183,9 +180,9 @@ function UdpReceiver(port) {
         case 'N':
           params.push(null);
           break;
-        // NOTE(pizthewiz) - find better synthesized parameter for Impulse
         case 'I':
-          params.push(null);
+          // NOTE(pizthewiz) - find better synthesized parameter for Impulse.
+          params.push(undefined);
           break;
         case 'f':
           params.push(readFloat(msg, pos));

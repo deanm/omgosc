@@ -27,5 +27,5 @@ var i = 0;
 setInterval(function() {
   sender.send('/osc_data',
               'sfiTFNI',
-              ['hello', Math.random(), i++, null, null, null, null]);
+              ['hello', Math.random(), i++, true, false, null, undefined]);
 }, 1000/10);
