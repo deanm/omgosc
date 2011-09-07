@@ -146,6 +146,12 @@ function UdpReceiver(port) {
     return buffer.toString('ascii', start, end);
   }
 
+  function readBlob(buffer, start) {
+    var len = readInt(buffer, start);
+    start += 4;
+    return buffer.slice(start, start+len);
+  }
+
   function readFloat(buffer, pos) {
     data_view.setUint8(0, buffer[pos]);
     data_view.setUint8(1, buffer[pos+1]);
@@ -213,6 +219,11 @@ function UdpReceiver(port) {
           var str = readString(msg, pos);
           pos += str.length + 4 - (str.length & 3);
           params.push(str);
+          break;
+        case 'b':
+          var bytes = readBlob(msg, pos);
+          pos += 4 + bytes.length + 4 - (str.length & 3);
+          params.push(bytes);
           break;
         default:
           console.log('WARNING: Unhandled OSC type tag: ' + tag);
