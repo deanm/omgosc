@@ -23,6 +23,5 @@ var osc = require('./omgosc.js');
 
 var receiver = new osc.UdpReceiver(7777);
 receiver.on('', function(e) {
-  console.log(e.typetag);
-  console.log(e.params);
+  console.log(e);
 });
