@@ -46,7 +46,21 @@ function UdpSender(host, port, opts) {
     }
   }
 
-  // TODO(deanm): appendBlob.
+  function appendBlob(octets, val) {
+    var len = val.length;
+    appendInt(octets, len);
+
+    // TODO(pizthewiz) - find a better method to concatenate buffer bytes
+    for (var i = 0; i < len; ++i) {
+      octets.push(val[i]);
+    }
+
+    // We want to add the null byte and pad to 4 byte boundary.
+    var num_nulls = 4 - (len & 3);  // Will always be at least 1 for terminator.
+    for (var i = 0; i < num_nulls; ++i) {
+      octets.push(0);
+    }
+  }
 
   function appendInt(octets, val) {
     data_view.setInt32(0, val, false);
@@ -77,6 +91,9 @@ function UdpSender(host, port, opts) {
           break;
         case 's':
           appendString(octets, params[i]);
+          break;
+        case 'b':
+          appendBlob(octets, params[i]);
           break;
         // Types with implicit parameters, just ignore the passed parameter.
         case 'T': case 'F': case 'N': case 'I':
