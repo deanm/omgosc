@@ -50,13 +50,13 @@ function UdpSender(host, port, opts) {
     var len = val.length;
     appendInt(octets, len);
 
-    // TODO(pizthewiz) - find a better method to concatenate buffer bytes
+    // TODO(pizthewiz) - find a better method to concatenate buffer bytes, this does not scale!
     for (var i = 0; i < len; ++i) {
       octets.push(val[i]);
     }
 
-    // We want to add the null byte and pad to 4 byte boundary.
-    var num_nulls = 4 - (len & 3);  // Will always be at least 1 for terminator.
+    // We want to pad to 4 byte boundary.
+    var num_nulls = (4 - len % 4) % 4;
     for (var i = 0; i < num_nulls; ++i) {
       octets.push(0);
     }
@@ -222,7 +222,7 @@ function UdpReceiver(port) {
           break;
         case 'b':
           var bytes = readBlob(msg, pos);
-          pos += 4 + bytes.length + 4 - (str.length & 3);
+          pos += 4 + bytes.length + ((4 - bytes.length % 4) % 4);
           params.push(bytes);
           break;
         default:
