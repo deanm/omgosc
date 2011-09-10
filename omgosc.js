@@ -51,14 +51,14 @@ function UdpSender(host, port, opts) {
     appendInt(octets, len);
 
     // grow byte array and carve out space for the Blob
-    octets.length += len;
     var start = octets.length;
+    octets.length += len;
     for (var i = 0; i < len; ++i) {
       octets[start+i] = val[i];
     }
 
     // We want to pad to 4 byte boundary.
-    var num_nulls = (4 - len & 3) & 3;
+    var num_nulls = (4 - (len & 3)) & 3;
     for (var i = 0; i < num_nulls; ++i) {
       octets.push(0);
     }
@@ -224,7 +224,7 @@ function UdpReceiver(port) {
           break;
         case 'b':
           var bytes = readBlob(msg, pos);
-          pos += 4 + bytes.length + ((4 - bytes.length & 3) & 3);
+          pos += 4 + bytes.length + ((4 - (bytes.length & 3)) & 3);
           params.push(bytes);
           break;
         default:
