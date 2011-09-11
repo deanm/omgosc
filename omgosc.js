@@ -46,7 +46,23 @@ function UdpSender(host, port, opts) {
     }
   }
 
-  // TODO(deanm): appendBlob.
+  function appendBlob(octets, val) {
+    var len = val.length;
+    appendInt(octets, len);
+
+    // grow byte array and carve out space for the Blob
+    var start = octets.length;
+    octets.length += len;
+    for (var i = 0; i < len; ++i) {
+      octets[start+i] = val[i];
+    }
+
+    // We want to pad to 4 byte boundary.
+    var num_nulls = (4 - (len & 3)) & 3;
+    for (var i = 0; i < num_nulls; ++i) {
+      octets.push(0);
+    }
+  }
 
   function appendInt(octets, val) {
     data_view.setInt32(0, val, false);
@@ -77,6 +93,9 @@ function UdpSender(host, port, opts) {
           break;
         case 's':
           appendString(octets, params[i]);
+          break;
+        case 'b':
+          appendBlob(octets, params[i]);
           break;
         // Types with implicit parameters, just ignore the passed parameter.
         case 'T': case 'F': case 'N': case 'I':
@@ -127,6 +146,12 @@ function UdpReceiver(port) {
       throw "Encountered invalid OSC string, missing NULL termination.";
 
     return buffer.toString('ascii', start, end);
+  }
+
+  function readBlob(buffer, start) {
+    var len = readInt(buffer, start);
+    start += 4;
+    return buffer.slice(start, start+len);
   }
 
   function readFloat(buffer, pos) {
@@ -196,6 +221,11 @@ function UdpReceiver(port) {
           var str = readString(msg, pos);
           pos += str.length + 4 - (str.length & 3);
           params.push(str);
+          break;
+        case 'b':
+          var bytes = readBlob(msg, pos);
+          pos += 4 + bytes.length + ((4 - (bytes.length & 3)) & 3);
+          params.push(bytes);
           break;
         default:
           console.log('WARNING: Unhandled OSC type tag: ' + tag);
