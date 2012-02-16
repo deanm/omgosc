@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-var sys = require('sys');
+var sys = require('util');
 var events = require('events');
 var dgram = require('dgram');
 
