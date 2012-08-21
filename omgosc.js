@@ -27,6 +27,7 @@ function UdpSender(host, port, opts) {
   opts = opts === undefined ? { } : opts;
 
   var udp = dgram.createSocket('udp4');
+  udp.bind();
   if (opts.broadcast === true)
     udp.setBroadcast(true);
 
