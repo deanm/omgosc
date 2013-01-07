@@ -1,0 +1,35 @@
+{
+  "author": "Dean McNamee <dean@gmail.com>",
+  "name": "omgosc",
+  "version": "0.1.2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/oierbravo/omgosc.git"
+  },
+  "contributors": [
+    {
+      "name": "Dean McNamee",
+      "email": "dean@gmail.com"
+    },
+    {
+      "name": "pizthewiz",
+      "email": ""
+    },
+    {
+      "name": "Oier Bravo Urtasun",
+      "email": "https://github.com/oierbravo"
+    },
+    {
+      "name": "karlosgliberal",
+      "email": "https://github.com/karlosgliberal"
+    },
+	{
+      "name": "brainrape",
+      "email": "https://github.com/brainrape"
+    }
+    
+
+  ],
+  "main": "./omgosc"
+  
+}

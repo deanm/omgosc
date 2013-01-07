@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-var sys = require('sys');
+var sys = require('util');
 var events = require('events');
 var dgram = require('dgram');
 
@@ -27,6 +27,7 @@ function UdpSender(host, port, opts) {
   opts = opts === undefined ? { } : opts;
 
   var udp = dgram.createSocket('udp4');
+  udp.bind();
   if (opts.broadcast === true)
     udp.setBroadcast(true);
 
@@ -121,6 +122,10 @@ function UdpSender(host, port, opts) {
     appendInt(octets, message_octets.length);
     octets = octets.concat(message_octets);
     udp.send(new Buffer(octets), 0, octets.length, port, host);
+  };
+
+  this.close = function () {
+    udp.close()
   };
 }
 
@@ -248,6 +253,11 @@ function UdpReceiver(port) {
   });
 
   udp.bind(port);
+
+  this.close = function () {
+    udp.close()
+    this_.removeAllListeners()
+  }
 }
 sys.inherits(UdpReceiver, events.EventEmitter);
 
