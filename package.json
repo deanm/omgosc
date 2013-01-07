@@ -1,7 +1,7 @@
 {
   "author": "Dean McNamee <dean@gmail.com>",
   "name": "omgosc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "git://github.com/oierbravo/omgosc.git"
@@ -17,11 +17,15 @@
     },
     {
       "name": "Oier Bravo Urtasun",
-      "email": "oierbravo@gmail.com"
+      "email": "https://github.com/oierbravo"
     },
     {
       "name": "karlosgliberal",
       "email": "https://github.com/karlosgliberal"
+    },
+	{
+      "name": "brainrape",
+      "email": "https://github.com/brainrape"
     }
     
 
