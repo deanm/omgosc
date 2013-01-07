@@ -122,6 +122,16 @@ function UdpSender(host, port, opts) {
     octets = octets.concat(message_octets);
     udp.send(new Buffer(octets), 0, octets.length, port, host);
   };
+
+  // Close the underlying socket for the sender.  Since this is UDP this
+  // doesn't really have an effect beyond just closing the file descriptor.
+  // Returns true if the socket was closed or false if it was already closed.
+  this.close = function() {
+    if (udp === null) return false;  // Already closed.
+    udp.close();
+    udp = null;  // Any further use (send, etc) should cause an exception.
+    return true;
+  };
 }
 
 var dgram = require('dgram');
@@ -248,6 +258,17 @@ function UdpReceiver(port) {
   });
 
   udp.bind(port);
+
+  // Close the underlying socket for the receiver.  No new messages should be
+  // received and the socket will be closed (although perhaps it is possible
+  // we will still get some messages that are already received and buffered).
+  // Returns true if the socket was closed or false if it was already closed.
+  this.close = function() {
+    if (udp === null) return false;
+    udp.close();
+    udp = null;
+    return true;
+  };
 }
 util.inherits(UdpReceiver, events.EventEmitter);
 
