@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
-var sys = require('sys');
+var util = require('util');
 var events = require('events');
 var dgram = require('dgram');
 
@@ -249,7 +249,7 @@ function UdpReceiver(port) {
 
   udp.bind(port);
 }
-sys.inherits(UdpReceiver, events.EventEmitter);
+util.inherits(UdpReceiver, events.EventEmitter);
 
 exports.UdpSender = UdpSender;
 exports.UdpReceiver = UdpReceiver;
