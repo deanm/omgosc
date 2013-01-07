@@ -123,6 +123,10 @@ function UdpSender(host, port, opts) {
     octets = octets.concat(message_octets);
     udp.send(new Buffer(octets), 0, octets.length, port, host);
   };
+
+  this.close = function () {
+    udp.close()
+  };
 }
 
 var dgram = require('dgram');
@@ -249,6 +253,11 @@ function UdpReceiver(port) {
   });
 
   udp.bind(port);
+
+  this.close = function () {
+    udp.close()
+    this_.removeAllListeners()
+  }
 }
 sys.inherits(UdpReceiver, events.EventEmitter);
 
