@@ -1,0 +1,11 @@
+{
+  "name": "omgosc",
+  "version": "1.0.0",
+  "author": "Dean McNamee <dean@gmail.com>",
+  "keywords": ["osc", "open sound control"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deanm/omgosc"
+  },
+  "main": "omgosc.js"
+}
