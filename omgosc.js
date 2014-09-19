@@ -242,7 +242,9 @@ function UdpReceiver(port) {
           break;
       }
     }
-
+    
+    params.info = rinfo;
+    
     var e = {path: path, typetag: typetag.substr(1), params: params}
     this_.emit(path + typetag, e);
     this_.emit(path, e);
