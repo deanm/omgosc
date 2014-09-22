@@ -183,7 +183,7 @@ function UdpReceiver(port) {
   var udp = dgram.createSocket('udp4');
 
   var this_ = this;
-  function processMessageOrBundle(msg, pos) {
+  function processMessageOrBundle(msg, pos, rinfo) {
     var path = readString(msg, pos);
     pos += path.length + 4 - (path.length & 3);
 
@@ -251,7 +251,7 @@ function UdpReceiver(port) {
 
   udp.on('message', function(msg, rinfo) {
     try {
-      processMessageOrBundle(msg, 0);
+      processMessageOrBundle(msg, 0, rinfo);
     } catch(e) {
       console.log('WARNING: Skipping OSC message, error: ' + e);
     }
